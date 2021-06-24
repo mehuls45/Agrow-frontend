@@ -923,6 +923,9 @@ export class RegisterComponent implements OnInit {
     this.districts = this.stateList.find(sL => sL.state == state).districts;
   }
 
+  showBanner:boolean = false;
+  registerFail:boolean = true;
+
   constructor(
     private cloudantService: CloudantDataService
   ) { }
@@ -956,17 +959,17 @@ export class RegisterComponent implements OnInit {
     this.registered=true;
 
     this.cloudantService.signup(req).subscribe(data => {
+
+      this.showBanner = true;
       console.log("Signup response: " + JSON.stringify(data))
+
+      if(data.result == 'User-id already exists! Please choose a different User-id.') {
+         this.registerFail = true;
+      } else {
+         this.registerFail = false;
+      }
+
     });
-
-
-  //   {
-  //     "name" :"Bharati",
-  //     "district" :"Ahmednagar",
-  //     "state" : "Maharashtra",
-  //     "phone" : "7555555556",
-  //     "areaOfLand" : 2.5
-  // }
 
   }
 

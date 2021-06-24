@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CloudantDataService } from 'src/app/service/cloudant-data.service';
 
 @Component({
@@ -13,7 +14,13 @@ export class LoginComponent implements OnInit {
   mobileNo: FormControl;
   OTP: FormControl; 
 
+  showBanner:boolean=false;
+  loginFail:boolean=true;
+
+  userName;
+
   constructor(
+    private router: Router,
     private cloudantService: CloudantDataService
   ) { }
 
@@ -36,11 +43,27 @@ export class LoginComponent implements OnInit {
 
     localStorage.setItem("phone",req.phone);
 
-    console.log("Login req: " + req);
+    console.log("Login req: " + JSON.stringify(req) );
 
     this.cloudantService.login(req).subscribe( res => {
 
+      this.showBanner = true;
       console.log('Login Response: ' + JSON.stringify(res))
+
+      if(res.result == 'Invalid User-id') {
+        this.loginFail = true;
+      } else {
+        this.loginFail = false;
+
+        this.userName = res.name;
+
+        localStorage.setItem("Name",this.userName);
+
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 2000);
+      }
+
     });
 
   

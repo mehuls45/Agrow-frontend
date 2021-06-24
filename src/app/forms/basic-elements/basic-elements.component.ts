@@ -22,6 +22,9 @@ export class BasicElementsComponent implements OnInit {
   expProduce: FormControl;
   harvestPeriod: FormControl;
   harvestYear: FormControl;
+  
+  showBanner:boolean=false;
+  entrySuccess:boolean=false;
 
   stateList: Array<any> = [
     {  
@@ -1029,7 +1032,7 @@ export class BasicElementsComponent implements OnInit {
       quantitySown: new FormControl('', Validators.required),
       expProduce : new FormControl('', Validators.required),
       harvestPeriod: new FormControl('', Validators.required),
-      harvestYear: new FormControl('', Validators.required)
+      harvestYear: new FormControl('2021')
     });
 
     this.getJSON().subscribe(data => {
@@ -1076,9 +1079,15 @@ export class BasicElementsComponent implements OnInit {
 
     this.cloudantService.addMyCrop(postData).subscribe( res => {
        console.log("Add my crop response: " + JSON.stringify(res))
+
+       this.showBanner = true;
+       this.entrySuccess = true;
     });
 
     this.clearAll();
+
+
+
   }
 
   getJSON(): Observable<any> {

@@ -1,3 +1,17 @@
+<div class="row" id="proBanner">
+  <div class="col-4"></div>
+  <div class="col-4" *ngIf="showBanner && !registerFail">
+    <span class="align-items-center purchase-popup">
+      <p style="color: green;"><b>Mobile no registered successfully !</b></p>
+    </span>
+  </div>
+  <div class="col-4" *ngIf="showBanner && registerFail">
+    <span class="align-items-center purchase-popup">
+      <p style="color: red;"><b>Mobile no already registered, please proceed to login or reister a new number!</b></p>
+    </span>
+  </div>
+  <div class="col-4"></div>
+</div>
 <div class="d-flex align-items-center auth px-0">
   <div class="row w-100 mx-0">
     <div class="col-lg-4 mx-auto">
@@ -5,9 +19,6 @@
         <div class="brand-logo">
           <img src="assets/images/image_new.png" alt="logo">
         </div>
-
-        <h3 style="color: green" *ngIf="registered">User registered successfully</h3>
-
         <h6>New here?</h6>
         
         <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>

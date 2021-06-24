@@ -8,7 +8,7 @@ export class CloudantDataService {
 
   constructor(private http: HttpClient) { }
 
-  db_url = 'http://192.168.1.36:5000/';
+  db_url = 'https://agrow-grep-tribe.herokuapp.com/';
 
   getStatusCode() {
     return this.http.get(this.db_url);
